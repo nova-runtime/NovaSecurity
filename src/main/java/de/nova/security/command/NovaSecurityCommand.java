@@ -16,12 +16,7 @@ public class NovaSecurityCommand implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(
-            CommandSender sender,
-            Command command,
-            String label,
-            String[] args
-    ) {
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!sender.hasPermission("novasecurity.admin")) {
             sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
@@ -41,11 +36,34 @@ public class NovaSecurityCommand implements CommandExecutor {
             return true;
         }
 
+        // /novasecurity debug on|off
+        if (args.length == 2 && args[0].equalsIgnoreCase("debug")) {
+            boolean enable;
+
+            if (args[1].equalsIgnoreCase("on")) {
+                enable = true;
+            } else if (args[1].equalsIgnoreCase("off")) {
+                enable = false;
+            } else {
+                sender.sendMessage(ChatColor.RED + "Usage: /novasecurity debug <on|off>");
+                return true;
+            }
+
+            plugin.getConfig().set("logging.debug", enable);
+            plugin.saveConfig();
+
+            sender.sendMessage(ChatColor.GREEN + "Debug mode "
+                    + (enable ? "enabled" : "disabled") + ".");
+            return true;
+        }
+
         sender.sendMessage(ChatColor.RED + "Usage:");
         sender.sendMessage(ChatColor.GRAY + "/novasecurity");
         sender.sendMessage(ChatColor.GRAY + "/novasecurity reload");
+        sender.sendMessage(ChatColor.GRAY + "/novasecurity debug <on|off>");
         return true;
     }
+
 
     private void sendInfo(CommandSender sender) {
         sender.sendMessage("");

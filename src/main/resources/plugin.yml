@@ -14,3 +14,7 @@ permissions:
   novasecurity.admin:
     description: Allows access to NovaSecurity admin commands
     default: op
+	
+  novasecurity.bypass:
+	description: Bypass all NovaSecurity checks
+	default: op
