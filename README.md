@@ -1,46 +1,59 @@
 # 🔐 NovaSecurity
 
-**NovaSecurity** ist ein modernes **Security- & Protection-Plugin** für **Spigot & Paper**.
+**NovaSecurity** ist ein modernes **Security- & Stability-Plugin** für **Paper & Spigot**.
 
-Ziel des Projekts ist es, Minecraft-Server **stabiler**, **sicherer** und **resistenter gegen Exploits & Crashes** zu machen – ohne unnötigen Overhead oder komplizierte Konfiguration.
+Das Ziel des Projekts ist es, Minecraft-Server **stabil**, **sicher** und **resistent gegen Exploits, Floods und Crash-Angriffe** zu machen –  
+ohne unnötigen Overhead, aggressive False-Positives oder AntiCheat-Verhalten.
 
 > 🛡️ Security-first • ⚡ Performance-schonend • 🔌 Plugin-basiert • 🌐 Network-ready
 
 ---
 
-## ✨ Features (aktuell & geplant)
+## ✨ Features (aktuell)
 
-### 🔐 Core-Security
+### 🔐 Exploit & Flood Protection
+- Book- & NBT-Exploit-Schutz
+- Chat-Flood & Crash-Protection
+- Command-Spam-Schutz
+- Inventory- & Interact-Spam-Schutz
+- Tab-Complete-Flood-Protection
 
-* Schutz vor **bekannten Crash-Exploits** (Books, NBT, Packets)
-* Validierung von **Client-Daten & Payloads**
-* Sichere Kick-/Block-Mechanismen statt Server-Crashes
+### 🌍 Chunk & World Safety
+- Chunk-Load-Spam-Erkennung
+- Entity-Flood-Erkennung pro Chunk
+- TileEntity-Flood-Erkennung (Hopper, Chests, Signs, etc.)
+- **Per-World Whitelist & Blacklist** zur Vermeidung von False Positives
 
-### ⚡ Performance-freundlich
+### ⚙️ Smart Enforcement
+- Violation-Counter pro Spieler
+- Eskalationssystem (WARN → KICK)
+- Keine sofortigen Kicks bei Chunk-/Entity-Checks
+- Konfigurierbare Actions (`CANCEL`, `WARN`, `KICK`)
+- Admin- & System-Bypass
 
-* Kein permanenter Tick-Overhead
-* Event- & Packet-basierte Checks
-* Fokus auf Stabilität bei hoher Spielerzahl
+### 🔔 Administration & Monitoring
+- Live **Admin-Alerts** bei allen Violations
+- Alerts pro Admin ein-/ausschaltbar
+- Persistente Violation-Speicherung (YAML)
+- Debug-Modus für Feintuning
 
-### ⚙️ Konfigurierbar
+---
 
-* Zentrale `config.yml`
-* Alle Schutzmechanismen einzeln aktivier-/deaktivierbar
-* Serverfreundliche Default-Werte
+## ⚡ Performance & Sicherheit
+- Kein permanenter Tick-Overhead
+- Event-basierte Checks
+- Keine Welt-Scans
+- Keine Entity-/Block-Removals
+- Sicherer Umgang mit Async-Events
 
-### 🌐 Netzwerk-Vorbereitung
-
-* Spigot & Paper Support
-* Architektur vorbereitet für **Bungee/Velocity** (später)
-* Einheitliches Verhalten über mehrere Server hinweg
+NovaSecurity schützt **den Server**, nicht die Weltdateien.
 
 ---
 
 ## 🧩 Unterstützte Plattformen
-
-* ✅ **Paper** (empfohlen)
-* ✅ **Spigot**
-* ⏳ **Bungee / Velocity** (geplant)
+- ✅ **Paper** (empfohlen)
+- ✅ **Spigot**
+- ⏳ **Bungee / Velocity** (geplant)
 
 ---
 
@@ -48,71 +61,29 @@ Ziel des Projekts ist es, Minecraft-Server **stabiler**, **sicherer** und **resi
 
 1. Lade die neueste `NovaSecurity.jar` herunter
 2. Lege sie in den `plugins/`-Ordner deines Servers
-3. Starte den Server neu
-4. Konfiguriere `plugins/NovaSecurity/config.yml`
+3. Starte den Server
+4. Passe die Konfiguration unter `plugins/NovaSecurity/config.yml` an
 
 ---
 
-## ⚙️ Beispiel-Konfiguration
+## ⚙️ Konfigurations-Highlights
 
 ```yml
-nova:
-  security:
-    book-crash-protection: true
-    nbt-size-limit: true
-    packet-rate-limit: true
+security:
+  chat:
+    max-length: 256
+    action: WARN
 
-  punishments:
-    kick-message: "§cUngültige Client-Daten erkannt"
+  interact:
+    max-per-second: 20
+    action: CANCEL
 
-  logging:
-    log-to-console: true
-```
+  chunk-entities:
+    max: 150
+    action: WARN
+    disabled-worlds:
+      - creative
+      - plots
 
----
-
-## 📊 Commands & Permissions
-
-### 🔹 Commands
-
-* `/novasecurity` – Plugin-Info & Status
-* `/novasecurity reload` – Konfiguration neu laden
-
-### 🔹 Permissions
-
-* `novasecurity.admin` – Admin-Zugriff
-
----
-
-## 🧠 Projektphilosophie
-
-NovaSecurity verfolgt einen klaren Ansatz:
-
-* **Security im Core denken – aber als Plugin umsetzen**
-* Keine unnötigen Features
-* Kein AntiCheat-Ersatz, sondern **reiner Schutz & Stabilität**
-* Sauberer Code, nachvollziehbare Logik
-
----
-
-## 🗺️ Roadmap
-
-* [ ] Book- & NBT-Exploit-Schutz
-* [ ] Packet Rate Limiting
-* [ ] Config Reload ohne Neustart
-* [ ] Bungee/Velocity-Modul
-* [ ] Metrics & optionales Debug-Logging
-
----
-
-## 📄 Lizenz
-
-Dieses Projekt ist ein **privates Open-Source-Projekt** zu Lern- und Entwicklungszwecken.
-
----
-
-## 🚀 Vision
-
-**NovaSecurity** soll eine **leichte, verlässliche Sicherheits-Basis** für Minecraft-Server jeder Größe werden – von kleinen Community-Servern bis hin zu größeren Netzwerken.
-
-Built with ❤️ & Java.
+alerts:
+  enabled: true
