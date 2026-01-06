@@ -1,4 +1,13 @@
 security:
+  chunk-entities:
+    enabled: true
+    enabled-worlds:
+      - world
+      - world_nether
+    disabled-worlds:
+      - creative
+      - plots
+
   book:
     max-pages: 50
     max-chars-per-page: 256
