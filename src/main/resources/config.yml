@@ -1,0 +1,4 @@
+security:
+  book:
+    max-pages: 50
+    max-chars-per-page: 256
