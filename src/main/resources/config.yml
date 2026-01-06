@@ -2,8 +2,16 @@ security:
   book:
     max-pages: 50
     max-chars-per-page: 256
+    action: KICK
 
   nbt:
     max-name-length: 64
     max-lore-lines: 20
     max-lore-length: 128
+    action: WARN
+
+messages:
+  kick: "§cInvalid client data detected."
+
+logging:
+  debug: false
