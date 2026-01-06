@@ -4,11 +4,28 @@ security:
     max-chars-per-page: 256
     action: KICK
 
+  chat:
+    max-length: 256
+    action: WARN
+
+
   nbt:
     max-name-length: 64
     max-lore-lines: 20
     max-lore-length: 128
     action: WARN
+
+  cooldown:
+    enabled: true
+    time-ms: 5000
+
+  escalation:
+    enabled: true
+    levels:
+      - violations: 3
+        action: WARN
+      - violations: 6
+        action: KICK
 
 messages:
   kick: "§cInvalid client data detected."

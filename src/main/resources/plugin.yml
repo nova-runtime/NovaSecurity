@@ -3,18 +3,15 @@ version: 1.0.0
 main: de.nova.security.NovaSecurity
 api-version: "1.21"
 author: Nova Runtime
-description: Lightweight security & protection plugin for Paper and Spigot
+description: Lightweight security & protection plugin
+
 commands:
   novasecurity:
     description: NovaSecurity main command
-    usage: /novasecurity [reload]
     permission: novasecurity.admin
 
 permissions:
   novasecurity.admin:
-    description: Allows access to NovaSecurity admin commands
     default: op
-
   novasecurity.bypass:
-    description: Bypass all NovaSecurity checks
     default: op

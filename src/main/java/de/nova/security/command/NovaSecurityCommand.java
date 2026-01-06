@@ -1,11 +1,13 @@
 package de.nova.security.command;
 
 import de.nova.security.NovaSecurity;
+import de.nova.security.util.ViolationCounter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class NovaSecurityCommand implements CommandExecutor {
 
@@ -19,67 +21,46 @@ public class NovaSecurityCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (!sender.hasPermission("novasecurity.admin")) {
-            sender.sendMessage(ChatColor.RED + "You do not have permission to use this command.");
+            sender.sendMessage(ChatColor.RED + "No permission.");
             return true;
         }
 
-        // /novasecurity
         if (args.length == 0) {
-            sendInfo(sender);
+            sender.sendMessage("§bNovaSecurity §7v" + plugin.getDescription().getVersion());
+            sender.sendMessage("§7/novasecurity reload");
+            sender.sendMessage("§7/novasecurity debug <on|off>");
+            sender.sendMessage("§7/novasecurity status <player>");
             return true;
         }
 
-        // /novasecurity reload
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             plugin.reloadConfig();
-            sender.sendMessage(ChatColor.GREEN + "NovaSecurity configuration reloaded.");
+            sender.sendMessage("§aConfiguration reloaded.");
             return true;
         }
 
-        // /novasecurity debug on|off
         if (args.length == 2 && args[0].equalsIgnoreCase("debug")) {
-            boolean enable;
+            boolean value = args[1].equalsIgnoreCase("on");
+            plugin.getConfig().set("logging.debug", value);
+            plugin.saveConfig();
+            sender.sendMessage("§aDebug mode " + (value ? "enabled" : "disabled"));
+            return true;
+        }
 
-            if (args[1].equalsIgnoreCase("on")) {
-                enable = true;
-            } else if (args[1].equalsIgnoreCase("off")) {
-                enable = false;
-            } else {
-                sender.sendMessage(ChatColor.RED + "Usage: /novasecurity debug <on|off>");
+        if (args.length == 2 && args[0].equalsIgnoreCase("status")) {
+            Player target = Bukkit.getPlayer(args[1]);
+            if (target == null) {
+                sender.sendMessage("§cPlayer not found.");
                 return true;
             }
 
-            plugin.getConfig().set("logging.debug", enable);
-            plugin.saveConfig();
-
-            sender.sendMessage(ChatColor.GREEN + "Debug mode "
-                    + (enable ? "enabled" : "disabled") + ".");
+            sender.sendMessage("§bNovaSecurity Status");
+            sender.sendMessage("§7Player: §f" + target.getName());
+            sender.sendMessage("§7Violations: §c" +
+                    ViolationCounter.get(target.getUniqueId()));
             return true;
         }
 
-        sender.sendMessage(ChatColor.RED + "Usage:");
-        sender.sendMessage(ChatColor.GRAY + "/novasecurity");
-        sender.sendMessage(ChatColor.GRAY + "/novasecurity reload");
-        sender.sendMessage(ChatColor.GRAY + "/novasecurity debug <on|off>");
         return true;
-    }
-
-
-    private void sendInfo(CommandSender sender) {
-        sender.sendMessage("");
-        sender.sendMessage(ChatColor.AQUA + "" + ChatColor.BOLD + "NovaSecurity "
-                + ChatColor.WHITE + "v" + plugin.getDescription().getVersion());
-        sender.sendMessage(ChatColor.GRAY + "by Nova Runtime");
-        sender.sendMessage("");
-
-        sender.sendMessage(ChatColor.GREEN + "✔ Active protections:");
-        sender.sendMessage(ChatColor.GRAY + "• Book exploit protection");
-        sender.sendMessage(ChatColor.GRAY + "• NBT / ItemMeta size protection");
-        sender.sendMessage("");
-
-        sender.sendMessage(ChatColor.GRAY + "Running on "
-                + ChatColor.WHITE + Bukkit.getName()
-                + ChatColor.GRAY + " (" + Bukkit.getVersion() + ")");
-        sender.sendMessage("");
     }
 }
