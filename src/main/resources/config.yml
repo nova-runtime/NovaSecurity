@@ -18,6 +18,11 @@ security:
     window-ms: 1000
     action: WARN
 
+  inventory:
+    max-clicks: 30
+    window-ms: 1000
+    action: WARN
+
   chat:
     max-length: 256
     action: WARN

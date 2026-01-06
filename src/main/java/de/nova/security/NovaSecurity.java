@@ -23,6 +23,7 @@ public final class NovaSecurity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new ChunkExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new EntityChunkExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new TileEntityChunkExploitListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new InventorySpamListener(this), this);
 
         getCommand("novasecurity").setExecutor(new NovaSecurityCommand(this));
 
@@ -40,6 +41,7 @@ public final class NovaSecurity extends JavaPlugin {
         log("§7• Chunk load spam protection");
         log("§7• Chunk entity flood protection");
         log("§7• TileEntity flood protection");
+        log("§7• Inventory click spam protection");
         log("");
         log("§7Startup completed in §f" + took + "ms");
         log("");
