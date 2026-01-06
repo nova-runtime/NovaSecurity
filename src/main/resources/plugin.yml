@@ -1,0 +1,6 @@
+name: NovaSecurity
+version: 1.0.0
+main: de.nova.security.NovaSecurity
+api-version: "1.21"
+author: Nova Runtime
+description: Lightweight security & protection plugin for Paper and Spigot
