@@ -16,7 +16,7 @@ public class CommandSpamListener implements Listener {
     private final NovaSecurity plugin;
 
     // UUID -> [count, windowStart]
-    private final Map<UUID, CommandWindow> commandMap = new HashMap<>();
+    private final static Map<UUID, CommandWindow> commandMap = new HashMap<>();
 
     public CommandSpamListener(NovaSecurity plugin) {
         this.plugin = plugin;
@@ -67,4 +67,9 @@ public class CommandSpamListener implements Listener {
             this.windowStart = start;
         }
     }
+
+    public static void cleanup(UUID uuid) {
+    	commandMap.remove(uuid);
+    }
+
 }

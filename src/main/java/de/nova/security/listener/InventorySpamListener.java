@@ -17,7 +17,7 @@ public class InventorySpamListener implements Listener {
     private final NovaSecurity plugin;
 
     // UUID -> click window
-    private final Map<UUID, ClickWindow> clickMap = new HashMap<>();
+    private final static Map<UUID, ClickWindow> clickMap = new HashMap<>();
 
     public InventorySpamListener(NovaSecurity plugin) {
         this.plugin = plugin;
@@ -69,4 +69,9 @@ public class InventorySpamListener implements Listener {
             this.windowStart = start;
         }
     }
+
+    public static void cleanup(UUID uuid) {
+    	clickMap.remove(uuid);
+    }
+
 }

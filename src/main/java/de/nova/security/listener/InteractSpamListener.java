@@ -19,7 +19,7 @@ public class InteractSpamListener implements Listener {
     private final NovaSecurity plugin;
 
     // UUID -> interaction window
-    private final Map<UUID, InteractWindow> interactMap = new HashMap<>();
+    private final static Map<UUID, InteractWindow> interactMap = new HashMap<>();
 
     public InteractSpamListener(NovaSecurity plugin) {
         this.plugin = plugin;
@@ -92,4 +92,9 @@ public class InteractSpamListener implements Listener {
             this.windowStart = start;
         }
     }
+
+    public static void cleanup(UUID uuid) {
+        interactMap.remove(uuid);
+    }
+
 }

@@ -17,7 +17,7 @@ public class TabCompleteSpamListener implements Listener {
     private final NovaSecurity plugin;
 
     // UUID -> tab window
-    private final Map<UUID, TabWindow> tabMap = new HashMap<>();
+    private final static Map<UUID, TabWindow> tabMap = new HashMap<>();
 
     public TabCompleteSpamListener(NovaSecurity plugin) {
         this.plugin = plugin;
@@ -71,4 +71,9 @@ public class TabCompleteSpamListener implements Listener {
             this.windowStart = start;
         }
     }
+
+    public static void cleanup(UUID uuid) {
+        tabMap.remove(uuid);
+    }
+
 }

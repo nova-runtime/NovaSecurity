@@ -1,17 +1,19 @@
 name: NovaSecurity
 version: 1.0.0
 main: de.nova.security.NovaSecurity
-api-version: "1.21"
+api-version: 1.20
 author: Nova Runtime
-description: Lightweight security & protection plugin
+description: Advanced exploit and flood protection for Paper/Spigot servers
 
 commands:
   novasecurity:
-    description: NovaSecurity main command
+    description: Main command for NovaSecurity
     permission: novasecurity.admin
 
 permissions:
   novasecurity.admin:
+    default: op
+  novasecurity.alerts:
     default: op
   novasecurity.bypass:
     default: op

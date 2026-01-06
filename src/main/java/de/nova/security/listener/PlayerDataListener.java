@@ -2,6 +2,9 @@ package de.nova.security.listener;
 
 import de.nova.security.NovaSecurity;
 import de.nova.security.util.ViolationStorage;
+
+import java.util.UUID;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -22,6 +25,14 @@ public class PlayerDataListener implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        ViolationStorage.save(event.getPlayer().getUniqueId());
+        UUID uuid = event.getPlayer().getUniqueId();
+
+        CommandSpamListener.cleanup(uuid);
+        InventorySpamListener.cleanup(uuid);
+        InteractSpamListener.cleanup(uuid);
+        TabCompleteSpamListener.cleanup(uuid);
+
+        ViolationStorage.save(uuid);
     }
+
 }
