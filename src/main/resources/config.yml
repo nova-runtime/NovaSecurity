@@ -4,6 +4,11 @@ security:
     max-chars-per-page: 256
     action: KICK
 
+  command:
+    max-per-second: 10
+    window-ms: 1000
+    action: WARN
+
   chat:
     max-length: 256
     action: WARN

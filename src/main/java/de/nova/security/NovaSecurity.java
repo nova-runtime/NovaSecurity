@@ -1,12 +1,12 @@
 package de.nova.security;
 
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
-
 import de.nova.security.command.NovaSecurityCommand;
 import de.nova.security.listener.BookExploitListener;
 import de.nova.security.listener.ChatExploitListener;
+import de.nova.security.listener.CommandSpamListener;
 import de.nova.security.listener.NBTExploitListener;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NovaSecurity extends JavaPlugin {
 
@@ -21,11 +21,8 @@ public final class NovaSecurity extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new BookExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new NBTExploitListener(this), this);
-        
-        Bukkit.getPluginManager().registerEvents(
-                new ChatExploitListener(this), this
-        );
-
+        Bukkit.getPluginManager().registerEvents(new ChatExploitListener(this), this);
+        Bukkit.getPluginManager().registerEvents(new CommandSpamListener(this), this);
 
         getCommand("novasecurity").setExecutor(new NovaSecurityCommand(this));
 
@@ -38,6 +35,8 @@ public final class NovaSecurity extends JavaPlugin {
         log("§a✔ Security systems loaded");
         log("§7• Book exploit protection");
         log("§7• NBT / ItemMeta protection");
+        log("§7• Chat flood protection");
+        log("§7• Command spam protection");
         log("");
         log("§7Startup completed in §f" + took + "ms");
         log("");
