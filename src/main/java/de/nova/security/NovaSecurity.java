@@ -1,9 +1,11 @@
 package de.nova.security;
 
-import de.nova.security.listener.BookExploitListener;
-import de.nova.security.listener.NBTExploitListener;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import de.nova.security.command.NovaSecurityCommand;
+import de.nova.security.listener.BookExploitListener;
+import de.nova.security.listener.NBTExploitListener;
 
 public final class NovaSecurity extends JavaPlugin {
 
@@ -21,6 +23,11 @@ public final class NovaSecurity extends JavaPlugin {
         // Listener
         Bukkit.getPluginManager().registerEvents(new BookExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new NBTExploitListener(this), this);
+        
+        getCommand("novasecurity").setExecutor(
+                new NovaSecurityCommand(this)
+        );
+
 
         long took = System.currentTimeMillis() - startTime;
 

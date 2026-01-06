@@ -4,3 +4,13 @@ main: de.nova.security.NovaSecurity
 api-version: "1.21"
 author: Nova Runtime
 description: Lightweight security & protection plugin for Paper and Spigot
+commands:
+  novasecurity:
+    description: NovaSecurity main command
+    usage: /novasecurity [reload]
+    permission: novasecurity.admin
+
+permissions:
+  novasecurity.admin:
+    description: Allows access to NovaSecurity admin commands
+    default: op
