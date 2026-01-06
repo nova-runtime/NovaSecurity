@@ -1,9 +1,21 @@
 package de.nova.security;
 
-import de.nova.security.command.NovaSecurityCommand;
-import de.nova.security.listener.*;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import de.nova.security.command.NovaSecurityCommand;
+import de.nova.security.listener.BookExploitListener;
+import de.nova.security.listener.ChatExploitListener;
+import de.nova.security.listener.ChunkExploitListener;
+import de.nova.security.listener.CommandSpamListener;
+import de.nova.security.listener.EntityChunkExploitListener;
+import de.nova.security.listener.InteractSpamListener;
+import de.nova.security.listener.InventorySpamListener;
+import de.nova.security.listener.NBTExploitListener;
+import de.nova.security.listener.PlayerDataListener;
+import de.nova.security.listener.TabCompleteSpamListener;
+import de.nova.security.listener.TileEntityChunkExploitListener;
+import de.nova.security.util.ViolationStorage;
 
 public final class NovaSecurity extends JavaPlugin {
 
@@ -13,7 +25,7 @@ public final class NovaSecurity extends JavaPlugin {
     public void onEnable() {
         instance = this;
         long start = System.currentTimeMillis();
-
+        ViolationStorage.init(this);
         saveDefaultConfig();
 
         Bukkit.getPluginManager().registerEvents(new BookExploitListener(this), this);
@@ -31,6 +43,11 @@ public final class NovaSecurity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(
                 new InteractSpamListener(this), this
         );
+        
+        Bukkit.getPluginManager().registerEvents(
+                new PlayerDataListener(this), this
+        );
+
 
 
         getCommand("novasecurity").setExecutor(new NovaSecurityCommand(this));
@@ -58,6 +75,8 @@ public final class NovaSecurity extends JavaPlugin {
     @Override
     public void onDisable() {
         log("§cNovaSecurity disabled");
+        
+        ViolationStorage.saveAll();
     }
 
     public static NovaSecurity getInstance() {

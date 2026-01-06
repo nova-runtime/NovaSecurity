@@ -8,6 +8,9 @@ security:
       - creative
       - plots
 
+  persistence:
+    enabled: true
+
   book:
     max-pages: 50
     max-chars-per-page: 256

@@ -16,8 +16,16 @@ public class ViolationCounter {
         return violations.getOrDefault(uuid, 0);
     }
 
+    public static void set(UUID uuid, int value) {
+        violations.put(uuid, value);
+    }
+
     public static void reset(UUID uuid) {
         violations.remove(uuid);
+    }
+
+    public static Map<UUID, Integer> getAll() {
+        return violations;
     }
 
     public static void clearAll() {
