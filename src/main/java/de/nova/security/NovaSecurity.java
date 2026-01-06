@@ -3,6 +3,7 @@ package de.nova.security;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.nova.security.listener.BookExploitListener;
+import de.nova.security.listener.NBTExploitListener;
 
 public final class NovaSecurity extends JavaPlugin {
 
@@ -13,6 +14,10 @@ public final class NovaSecurity extends JavaPlugin {
         
         getServer().getPluginManager().registerEvents(
                 new BookExploitListener(this), this
+            );
+        
+        getServer().getPluginManager().registerEvents(
+                new NBTExploitListener(this), this
             );
     }
 

@@ -2,3 +2,8 @@ security:
   book:
     max-pages: 50
     max-chars-per-page: 256
+
+  nbt:
+    max-name-length: 64
+    max-lore-lines: 20
+    max-lore-length: 128
