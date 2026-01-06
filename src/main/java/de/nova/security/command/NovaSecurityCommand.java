@@ -1,13 +1,15 @@
 package de.nova.security.command;
 
-import de.nova.security.NovaSecurity;
-import de.nova.security.util.ViolationCounter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import de.nova.security.NovaSecurity;
+import de.nova.security.alert.AlertService;
+import de.nova.security.util.ViolationCounter;
 
 public class NovaSecurityCommand implements CommandExecutor {
 
@@ -30,6 +32,7 @@ public class NovaSecurityCommand implements CommandExecutor {
             sender.sendMessage("§7/novasecurity reload");
             sender.sendMessage("§7/novasecurity debug <on|off>");
             sender.sendMessage("§7/novasecurity status <player>");
+            sender.sendMessage("§7/novasecurity alerts");
             return true;
         }
 
@@ -46,6 +49,22 @@ public class NovaSecurityCommand implements CommandExecutor {
             sender.sendMessage("§aDebug mode " + (value ? "enabled" : "disabled"));
             return true;
         }
+        
+        if (args.length == 1 && args[0].equalsIgnoreCase("alerts")) {
+            if (!(sender instanceof Player player)) {
+                sender.sendMessage("Only players can use this command.");
+                return true;
+            }
+
+            if (!player.hasPermission("novasecurity.alerts")) {
+                sender.sendMessage("No permission.");
+                return true;
+            }
+
+            AlertService.toggle(player);
+            return true;
+        }
+
 
         if (args.length == 2 && args[0].equalsIgnoreCase("status")) {
             Player target = Bukkit.getPlayer(args[1]);

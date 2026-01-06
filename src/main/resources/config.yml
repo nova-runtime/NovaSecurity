@@ -74,5 +74,10 @@ security:
 messages:
   kick: "§cInvalid client data detected."
 
+alerts:
+  enabled: true
+  format: "§8[§bNovaSecurity§8] §f{player} §7→ §c{reason} §8(| {violations}, {action}, {world})"
+
+
 logging:
   debug: false
