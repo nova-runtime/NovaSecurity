@@ -24,6 +24,14 @@ public final class NovaSecurity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EntityChunkExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new TileEntityChunkExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new InventorySpamListener(this), this);
+        Bukkit.getPluginManager().registerEvents(
+                new TabCompleteSpamListener(this), this
+        );
+        
+        Bukkit.getPluginManager().registerEvents(
+                new InteractSpamListener(this), this
+        );
+
 
         getCommand("novasecurity").setExecutor(new NovaSecurityCommand(this));
 

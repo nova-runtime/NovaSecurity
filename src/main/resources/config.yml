@@ -13,10 +13,20 @@ security:
     max: 150
     action: WARN
 
+  tabcomplete:
+    max-per-second: 15
+    window-ms: 1000
+    action: CANCEL
+
   chunk:
     max-loads: 20
     window-ms: 1000
     action: WARN
+
+  interact:
+    max-per-second: 20
+    window-ms: 1000
+    action: CANCEL
 
   inventory:
     max-clicks: 30
