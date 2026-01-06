@@ -9,6 +9,11 @@ security:
     window-ms: 1000
     action: WARN
 
+  chunk:
+    max-loads: 20
+    window-ms: 1000
+    action: WARN
+
   chat:
     max-length: 256
     action: WARN

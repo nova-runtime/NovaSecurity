@@ -1,12 +1,14 @@
 package de.nova.security;
 
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import de.nova.security.command.NovaSecurityCommand;
 import de.nova.security.listener.BookExploitListener;
 import de.nova.security.listener.ChatExploitListener;
+import de.nova.security.listener.ChunkExploitListener;
 import de.nova.security.listener.CommandSpamListener;
 import de.nova.security.listener.NBTExploitListener;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NovaSecurity extends JavaPlugin {
 
@@ -23,6 +25,11 @@ public final class NovaSecurity extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new NBTExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new ChatExploitListener(this), this);
         Bukkit.getPluginManager().registerEvents(new CommandSpamListener(this), this);
+        
+        Bukkit.getPluginManager().registerEvents(
+                new ChunkExploitListener(this), this
+        );
+
 
         getCommand("novasecurity").setExecutor(new NovaSecurityCommand(this));
 
