@@ -2,33 +2,40 @@ package de.nova.security.util;
 
 import de.nova.security.NovaSecurity;
 import de.nova.security.action.SecurityAction;
-import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 public class EscalationUtil {
 
+    @SuppressWarnings("unchecked")
     public static SecurityAction resolveAction(
             NovaSecurity plugin,
             int violations,
             SecurityAction defaultAction
     ) {
+
         if (!plugin.getConfig().getBoolean("security.escalation.enabled", true)) {
             return defaultAction;
         }
 
-        List<?> levels = plugin.getConfig().getList("security.escalation.levels");
-        if (levels == null) return defaultAction;
+        List<?> rawLevels = plugin.getConfig().getList("security.escalation.levels");
+        if (rawLevels == null || rawLevels.isEmpty()) {
+            return defaultAction;
+        }
 
-        return levels.stream()
-                .map(obj -> (ConfigurationSection) obj)
+        return rawLevels.stream()
+                .filter(obj -> obj instanceof Map)
+                .map(obj -> (Map<String, Object>) obj)
                 .sorted(Comparator.comparingInt(
-                        s -> s.getInt("violations")
+                        map -> ((Number) map.getOrDefault("violations", 0)).intValue()
                 ))
-                .filter(section -> violations >= section.getInt("violations"))
-                .map(section ->
-                        SecurityAction.fromString(section.getString("action"))
+                .filter(map -> violations >= ((Number) map.get("violations")).intValue())
+                .map(map ->
+                        SecurityAction.fromString(
+                                String.valueOf(map.get("action"))
+                        )
                 )
                 .reduce((first, second) -> second)
                 .orElse(defaultAction);

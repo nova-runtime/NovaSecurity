@@ -9,6 +9,10 @@ security:
     window-ms: 1000
     action: WARN
 
+  chunk-entities:
+    max: 150
+    action: WARN
+
   chunk:
     max-loads: 20
     window-ms: 1000
@@ -18,6 +22,9 @@ security:
     max-length: 256
     action: WARN
 
+  chunk-tileentities:
+    max: 80
+    action: WARN
 
   nbt:
     max-name-length: 64
